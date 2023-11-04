@@ -209,17 +209,17 @@ export default function Home() {
               <div className='flex flex-row'>
                 <Image
                   alt="ingredient"
-                  src={`/${recipes.get(recipe)[0]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[0]}.jpeg`}
                   height={64}
                   width={64}/>
                 <Image
                   alt="ingredient"
-                  src={`/${recipes.get(recipe)[1]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[1]}.jpeg`}
                   height={64}
                   width={64}/>
                 <Image
                   alt="ingredient"
-                  src={`/${recipes.get(recipe)[2]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[2]}.jpeg`}
                   height={64}
                   width={64}/>
               </div>
