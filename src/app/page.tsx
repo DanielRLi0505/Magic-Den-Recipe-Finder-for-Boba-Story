@@ -212,17 +212,17 @@ export default function Home() {
             <Card className='p-10 flex flex-column' key={index}>
               <h1 className="text-2xl">{recipe}</h1>
               <div className='flex flex-row'>
-                <img
+                <Image
                   alt="ingredient"
                   src={`/icons/${recipes.get(recipe)[0]}.jpeg`}
                   height={64}
                   width={64}/>
-                <img
+                <Image
                   alt="ingredient"
                   src={`/icons/${recipes.get(recipe)[1]}.jpeg`}
                   height={64}
                   width={64}/>
-                <img
+                <Image
                   alt="ingredient"
                   src={`/icons/${recipes.get(recipe)[2]}.jpeg`}
                   height={64}
