@@ -164,7 +164,7 @@ export default function Home() {
             <ListItem className="p-5" key={ingredient}>
               <img
                   alt="ingredient"
-                  src={`/icons/${ingredient}.jpeg`}
+                  src={`/icons/${ingredient}.JPED`}
                   height={32}
                   width={32}/>
               {ingredient}
@@ -214,17 +214,17 @@ export default function Home() {
               <div className='flex flex-row'>
                 <Image
                   alt="ingredient"
-                  src={`/icons/${recipes.get(recipe)[0]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[0]}.JPEG`}
                   height={64}
                   width={64}/>
                 <Image
                   alt="ingredient"
-                  src={`/icons/${recipes.get(recipe)[1]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[1]}.JPEG`}
                   height={64}
                   width={64}/>
                 <Image
                   alt="ingredient"
-                  src={`/icons/${recipes.get(recipe)[2]}.jpeg`}
+                  src={`/icons/${recipes.get(recipe)[2]}.JPEG`}
                   height={64}
                   width={64}/>
               </div>
