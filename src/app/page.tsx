@@ -5,8 +5,8 @@ import { Button, Card, List, ListItem, ListItemText, Paper } from '@mui/material
 import { red } from '@mui/material/colors';
 import { useState } from 'react';
 
-const ingredients = ["Bee", "Bear", "Chicks", "Cloud", "Dino", "Flower", "Frog", "Heart", "Milk", "Milk (Strawberry)", "Mushroom", "Pig",
-                   "Pineapples", "Planet", "Soda", "Star", "Sugar", "Tapioca"];
+const ingredients = ["Bee", "Bear", "Chick", "Cloud", "Dino", "Flower", "Frog", "Heart", "Milk", "Milk (Strawberry)", "Mushroom", "Pig",
+                   "Pineapple", "Planet", "Soda", "Star", "Sugar", "Tapioca"];
 
 const recipes = new Map();
 
@@ -162,6 +162,11 @@ export default function Home() {
           <List>
             {ingredients.map((ingredient) => (
             <ListItem className="p-5" key={ingredient}>
+              <Image
+                  alt="ingredient"
+                  src={`/icons/${ingredient}.jpeg`}
+                  height={32}
+                  width={32}/>
               {ingredient}
               <Button
                 onClick={() => {
