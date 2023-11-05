@@ -200,6 +200,11 @@ export default function Home() {
           <List>
             {Array.from(availableIngredients.entries()).map(([key, value]) => (
               <ListItem key={key}>
+                <img
+                  alt={key}
+                  src={`/icons/${key}.JPEG`}
+                  height={32}
+                  width={32}/>
                 {key} x{value}
                 <Button variant="outlined" 
                 onClick={() => {
