@@ -213,17 +213,17 @@ export default function Home() {
               <h1 className="text-2xl">{recipe}</h1>
               <div className='flex flex-row'>
                 <Image
-                  alt="ingredient"
+                  alt={recipes.get(recipe)[0]}
                   src={`/icons/${recipes.get(recipe)[0]}.JPEG`}
                   height={64}
                   width={64}/>
                 <Image
-                  alt="ingredient"
+                  alt={recipes.get(recipe)[1]}
                   src={`/icons/${recipes.get(recipe)[1]}.JPEG`}
                   height={64}
                   width={64}/>
                 <Image
-                  alt="ingredient"
+                  alt={recipes.get(recipe)[2]}
                   src={`/icons/${recipes.get(recipe)[2]}.JPEG`}
                   height={64}
                   width={64}/>
