@@ -164,7 +164,7 @@ export default function Home() {
             <ListItem className="p-5" key={ingredient}>
               <img
                   alt="ingredient"
-                  src={`/icons/${ingredient}.JPED`}
+                  src={`/icons/${ingredient}.JPEG`}
                   height={32}
                   width={32}/>
               {ingredient}
