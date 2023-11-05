@@ -20,6 +20,7 @@ recipes.set("Bread Boba", ["Milk (Strawberry)", "Milk", "Tapioca"]);
 recipes.set("Brown Cat Boba", ["Soda", "Milk", "Tapioca"]);
 recipes.set("Chick Boba", ["Chick", "Chick", "Tapioca"]);
 recipes.set("Cloud Boba", ["Cloud", "Cloud", "Tapioca"]);
+recipes.set("Cow Boba", ["Chick", "Milk", "Tapioca"]);
 recipes.set("Deer Boba", ["Mushroom", "Flower", "Tapioca"]);
 recipes.set("Diamond Boba", ["Planot", "Dino", "Tapioca"]);
 recipes.set("Dinosaur Boba", ["Dino", "Dino", "Tapioca"]);
