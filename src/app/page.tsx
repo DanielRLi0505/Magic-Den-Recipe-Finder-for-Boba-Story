@@ -163,7 +163,7 @@ export default function Home() {
             {ingredients.map((ingredient) => (
             <ListItem className="p-5" key={ingredient}>
               <img
-                  alt="ingredient"
+                  alt={ingredient}
                   src={`/icons/${ingredient}.JPEG`}
                   height={32}
                   width={32}/>
@@ -212,17 +212,17 @@ export default function Home() {
             <Card className='p-10 flex flex-column' key={index}>
               <h1 className="text-2xl">{recipe}</h1>
               <div className='flex flex-row'>
-                <Image
+                <img
                   alt={recipes.get(recipe)[0]}
                   src={`/icons/${recipes.get(recipe)[0]}.JPEG`}
                   height={64}
                   width={64}/>
-                <Image
+                <img
                   alt={recipes.get(recipe)[1]}
                   src={`/icons/${recipes.get(recipe)[1]}.JPEG`}
                   height={64}
                   width={64}/>
-                <Image
+                <img
                   alt={recipes.get(recipe)[2]}
                   src={`/icons/${recipes.get(recipe)[2]}.JPEG`}
                   height={64}
