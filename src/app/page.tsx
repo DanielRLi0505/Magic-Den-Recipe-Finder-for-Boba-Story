@@ -263,6 +263,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <title>Magic Den Recipe Finder</title>
+      <desc>Got ingredients but don't know what you can make?  Looking for specific recipes?  Visit this website, and you'll be cooking in no time!</desc>
       <div className='flex flex-col'>
         <div className='fixed top-0 left-0 p-10 text-4xl font-sans'>
           <h1> Magic Den Recipe Finder</h1>
