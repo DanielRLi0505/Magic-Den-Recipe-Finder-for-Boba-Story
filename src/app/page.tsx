@@ -126,19 +126,19 @@ function Recipe(props: RecipeProps) {
       <div className='flex flex-row'>
         <img
           alt={ingredient1}
-          src={`/icons/${ingredient1}.PNG`}
+          src={`/icons/${ingredient1}.png`}
           height={64}
           width={64}
           style={{ minWidth: 64, maxWidth: 64, minHeight: 64, maxHeight: 64}}/>
         <img
           alt={ingredient2}
-          src={`/icons/${ingredient2}.PNG`}
+          src={`/icons/${ingredient2}.png`}
           height={64}
           width={64}
           style={{ minWidth: 64, maxWidth: 64, minHeight: 64, maxHeight: 64}}/>
         <img
           alt={ingredient3}
-          src={`/icons/${ingredient3}.PNG`}
+          src={`/icons/${ingredient3}.png`}
           height={64}
           width={64}
           style={{ minWidth: 64, maxWidth: 64, minHeight: 64, maxHeight: 64}}/>
@@ -294,7 +294,7 @@ export default function Home() {
                 <ListItem className="p-5" key={ingredient}>
                   <img
                       alt={ingredient}
-                      src={`/icons/${ingredient}.PNG`}
+                      src={`/icons/${ingredient}.png`}
                       height={32}
                       width={32}/>
                   {ingredient}
@@ -321,7 +321,7 @@ export default function Home() {
                   <ListItem key={key}>
                     <img
                       alt={key}
-                      src={`/icons/${key}.PNG`}
+                      src={`/icons/${key}.png`}
                       height={32}
                       width={32}/>
                     {key} x{value}
