@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image'
-import { AppBar, Box, Button, Card, List, ListItem, ListItemText, Paper, Tab, Tabs, Typography } from '@mui/material';
+import { AppBar, Box, Button, Card, List, ListItem, ListItemText, Paper, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { SyntheticEvent, useState } from 'react';
 
@@ -150,7 +150,8 @@ function Recipe(props: RecipeProps) {
 export default function Home() {
   const [availableIngredients, setIngredients] = useState<Map<string, number>>(new Map());
   const [tab, setTab] = useState(0);
-  const [letter, setLetter] = useState('!');
+  const [letter, setLetter] = useState('?');
+  const [query, setQuery] = useState("");
   const ingredientsTab = () => {
     setTab(0);
   }
@@ -250,9 +251,12 @@ export default function Home() {
     return availableRecipes.filter((recipe) => recipe !== null);
   }
 
-  const displayAllRecipes = () => {
+  const displayRecipesBySearch = () => {
     const availableRecipes = Array.from(recipes).map(([recipeName, ingredients]) => {
-      return recipeName
+      if (recipeName.toLowerCase().includes(query.toLowerCase())) {
+        return recipeName;
+      }
+      return null;
     });
   
     return availableRecipes.filter((recipe) => recipe !== null);
@@ -359,23 +363,28 @@ export default function Home() {
             indicatorColor="secondary"
             aria-label="secondary tabs example"
             >
-              <Tab value='!' label="All" style={{minWidth: 50}}/>
+              <Tab value='?' label="Search" style={{minWidth: 50}}/>
               {Array.from(alphabet).map((letter) => (
                 <Tab value={letter} label={letter} style={{ minWidth: 50 }}/>
               ))}
             </Tabs>
-            {letter=="!" &&
-            <div>
-              {displayAllRecipes().map((recipe, index) => (
-                <Recipe
-                name={recipe}
-                index={index}
-                ingredient1={recipes.get(recipe)[0]}
-                ingredient2={recipes.get(recipe)[1]}
-                ingredient3={recipes.get(recipe)[2]}/>
-              ))}
-            </div>
-            }
+            {letter=="?" &&
+              <div>
+                <TextField label="Search" 
+                placeholder="search"
+                sx={{borderRadius: 80}}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setQuery(event.target.value);
+                }}/>
+                {displayRecipesBySearch().map((recipe, index) => (
+                  <Recipe
+                  name={recipe}
+                  index={index}
+                  ingredient1={recipes.get(recipe)[0]}
+                  ingredient2={recipes.get(recipe)[1]}
+                  ingredient3={recipes.get(recipe)[2]}/>
+                ))}
+              </div>}
             {displayRecipesByName().map((recipe, index) => (
               <Recipe
               name={recipe}
