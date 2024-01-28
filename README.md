@@ -1,6 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a Next.js project I created for people who play Boba Story!  Boba Story is a mobile game about running a boba shop.  At a certain point in the game, you unlock the Magic Den and can create new types of boba or other ingredients for it.  This website was made to show players what they can make in the game.
 
-## Getting Started
+
+## How to Use
+
+**Ingredients**
+
+Input how many ingredients you have in Boba Story, and it'll show you what recipes you can create.
+
+
+**Recipes**
+
+You can search for recipes by letter, or just type in the name by clicking the Search tab!
+
+
+If you would like to download the code and experiment with it, here's how to run it!
+
+## How to Run
 
 First, run the development server:
 
