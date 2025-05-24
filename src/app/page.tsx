@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image'
-import { AppBar, Box, Button, Card, List, ListItem, ListItemText, Paper, Tab, Tabs, TextField, Typography } from '@mui/material';
+import { AppBar, Box, Button, Card, Link, List, ListItem, ListItemText, Paper, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { NextResponse } from 'next/server';
@@ -138,7 +138,6 @@ interface RecipeProps {
 
 function Recipe(props: RecipeProps) {
   const {name, index, ingredient1, ingredient2, ingredient3, owned, ownRecipe, unownRecipe} = props;
-
   return (
     <Card className={`p-10 flex flex-column ${owned ? 'bg-black' : ''}`} key={index}>
       <h1 className={`text-2xl ${owned ? 'text-white' : ''}`}>{name}</h1>
@@ -350,14 +349,17 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <title>Magic Den Recipe Finder</title>
       <div className='flex flex-col'>
-        <div className='fixed top-0 left-0 p-10 text-4xl font-sans'>
-          <h1> Magic Den Recipe Finder</h1>
+        <div className='fixed top-0 left-0 p-10 font-sans'>
+          <h1 className='text-4xl'> Magic Den Recipe Finder</h1>
+          <Link href='https://ko-fi.com/danielrli0505'>
+            If you enjoyed your boba, consider buying me one if you would like!
+          </Link>
         </div>
         
       </div>
       
       
-      <div className='absolute overflow-y-scroll fixed left-0 p-10 flex flex-col'>
+      <div className='absolute fixed left-0 p-10 flex flex-col'>
         <Tabs
         value={tab}
         onChange={handleTabs}
@@ -365,8 +367,8 @@ export default function Home() {
         indicatorColor="secondary"
         aria-label="secondary tabs example"
         >
-          <Tab value={0} label="ingredients"/>
-          <Tab value={1} label="recipes"/>
+          <Tab className="bg-white" value={0} label="ingredients"/>
+          <Tab className="bg-white" value={1} label="recipes"/>
         </Tabs>
         {tab==0 && 
           <div className='flex flex-row'>
