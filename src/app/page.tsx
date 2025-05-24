@@ -131,14 +131,17 @@ interface RecipeProps {
   ingredient1: string;
   ingredient2: string;
   ingredient3: string;
+  owned: boolean;
+  ownRecipe: (recipe: string) => void;
+  unownRecipe: (recipe: string) => void;
 }
 
 function Recipe(props: RecipeProps) {
-  const {name, index, ingredient1, ingredient2, ingredient3} = props;
+  const {name, index, ingredient1, ingredient2, ingredient3, owned, ownRecipe, unownRecipe} = props;
 
   return (
-    <Card className='p-10 flex flex-column' key={index}>
-      <h1 className="text-2xl">{name}</h1>
+    <Card className={`p-10 flex flex-column ${owned ? 'bg-black' : ''}`} key={index}>
+      <h1 className={`text-2xl ${owned ? 'text-white' : ''}`}>{name}</h1>
       <div className='flex flex-row'>
         <img
           alt={ingredient1}
@@ -158,6 +161,7 @@ function Recipe(props: RecipeProps) {
           height={64}
           width={64}
           style={{ minWidth: 64, maxWidth: 64, minHeight: 64, maxHeight: 64}}/>
+          <Button className={owned ? 'text-red-400' : ''} onClick={() => owned ? unownRecipe(name) : ownRecipe(name)}>{owned ? "I have this!" : "Already have?"}</Button>
       </div>
     </Card>
   )
@@ -166,6 +170,7 @@ function Recipe(props: RecipeProps) {
 
 export default function Home() {
   const [availableIngredients, setIngredients] = useState<Map<string, number>>(new Map());
+  const [ownedRecipes, setOwnedRecipes] = useState<string[]>([]);
   const [tab, setTab] = useState(0);
   const [letter, setLetter] = useState('?');
   const [query, setQuery] = useState("");
@@ -203,6 +208,25 @@ export default function Home() {
 
   }, []);
 
+  const ownRecipe = (recipe: string) => {
+    setOwnedRecipes((prevOwnedRecipes: string[]) => {
+      const newOwnedRecipes = [...prevOwnedRecipes];
+      if (!newOwnedRecipes.includes(recipe)) {
+        newOwnedRecipes.push(recipe);
+      }
+      return newOwnedRecipes;
+    });
+  }
+
+  const unownRecipe = (recipe: string) => {
+    setOwnedRecipes((prevOwnedRecipes: string[]) => {
+      const newOwnedRecipes = [...prevOwnedRecipes];
+      if (newOwnedRecipes.includes(recipe)) {
+        newOwnedRecipes.splice(newOwnedRecipes.indexOf(recipe), 1);
+      }
+      return newOwnedRecipes;
+    });
+  }
 
   const ingredientsTab = () => {
     setTab(0);
@@ -408,7 +432,10 @@ export default function Home() {
                 index={index}
                 ingredient1={recipes.get(recipe)[0]}
                 ingredient2={recipes.get(recipe)[1]}
-                ingredient3={recipes.get(recipe)[2]}/>
+                ingredient3={recipes.get(recipe)[2]}
+                owned={ownedRecipes.includes(recipe)}
+                ownRecipe={ownRecipe}
+                unownRecipe={unownRecipe}/>
               ))}
             </div>
           </div>
@@ -442,7 +469,10 @@ export default function Home() {
                   index={index}
                   ingredient1={recipes.get(recipe)[0]}
                   ingredient2={recipes.get(recipe)[1]}
-                  ingredient3={recipes.get(recipe)[2]}/>
+                  ingredient3={recipes.get(recipe)[2]}
+                  owned={ownedRecipes.includes(recipe)}
+                  ownRecipe={ownRecipe}
+                  unownRecipe={unownRecipe}/>
                 ))}
               </div>}
             {displayRecipesByName().map((recipe, index) => (
@@ -451,7 +481,11 @@ export default function Home() {
               index={index}
               ingredient1={recipes.get(recipe)[0]}
               ingredient2={recipes.get(recipe)[1]}
-              ingredient3={recipes.get(recipe)[2]}/>
+              ingredient3={recipes.get(recipe)[2]}
+              owned={ownedRecipes.includes(recipe)}
+              ownRecipe={ownRecipe}
+              unownRecipe={unownRecipe}/>
+
             ))}
           </div>}
         
