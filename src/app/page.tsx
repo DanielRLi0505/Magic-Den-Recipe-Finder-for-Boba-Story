@@ -139,7 +139,7 @@ interface RecipeProps {
 function Recipe(props: RecipeProps) {
   const {name, index, ingredient1, ingredient2, ingredient3, owned, ownRecipe, unownRecipe} = props;
   return (
-    <Card className={`p-10 flex flex-column ${owned ? 'bg-black' : ''}`} key={index}>
+    <Card className={`p-10 flex flex-column ${owned ? 'bg-black' : 'bg-white'}`} key={index}>
       <h1 className={`text-2xl ${owned ? 'text-white' : ''}`}>{name}</h1>
       <div className='flex flex-row'>
         <img
@@ -160,7 +160,7 @@ function Recipe(props: RecipeProps) {
           height={64}
           width={64}
           style={{ minWidth: 64, maxWidth: 64, minHeight: 64, maxHeight: 64}}/>
-          <Button className={owned ? 'text-red-400' : ''} onClick={() => owned ? unownRecipe(name) : ownRecipe(name)}>{owned ? "I have this!" : "Already have?"}</Button>
+          <Button className={owned ? 'text-red-400' : 'text-blue-600'} onClick={() => owned ? unownRecipe(name) : ownRecipe(name)}>{owned ? "I have this!" : "Already have?"}</Button>
       </div>
     </Card>
   )
