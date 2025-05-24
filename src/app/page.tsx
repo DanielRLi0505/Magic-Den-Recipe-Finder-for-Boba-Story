@@ -3,83 +3,99 @@
 import Image from 'next/image'
 import { AppBar, Box, Button, Card, List, ListItem, ListItemText, Paper, Tab, Tabs, TextField, Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { NextResponse } from 'next/server';
+import { Console } from 'console';
 
 const ingredients = ["Bee", "Bear", "Chick", "Cloud", "Dino", "Flower", "Frog", "Heart", "Milk", "Milk (Strawberry)", "Mushroom", "Pig",
-                   "Pineapple", "Planet", "Soda", "Star", "Sugar", "Tapioca"];
+                   "Pineapple", "Planet", "Ribbon", "Soda", "Star", "Sugar", "Tapioca"];
+
+const nameChanges = new Map();
+
+nameChanges.set("Strawberry Milk", "Milk (Strawberry)");
+nameChanges.set("Tapioca Jar", "Tapioca");
+nameChanges.set("Sugar Cube", "Sugar");
+nameChanges.set("Dinosaur", "Dino");
+
 
 const recipes = new Map();
 
 const alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-recipes.set("Autumn Leaf Boba", ["Cloud", "Flower", "Tapioca"]);
-recipes.set("Bear Boba", ["Bear", "Bear", "Tapioca"]);
-recipes.set("Bee Boba", ["Bee", "Bee", "Tapioca"]);
-recipes.set("Black and White Boba", ["Cloud", "Tapioca", "Milk"]);
-recipes.set("Black Cat Paw Boba", ["Cloud", "Heart", "Tapioca"]);
-recipes.set("Boba Cheese Foam", ["Sugar", "Milk (Strawberry)", "Tapioca"]);
-recipes.set("Bread Boba", ["Milk (Strawberry)", "Milk", "Tapioca"]);
-recipes.set("Brown Cat Boba", ["Soda", "Milk", "Tapioca"]);
-recipes.set("Chick Boba", ["Chick", "Chick", "Tapioca"]);
-recipes.set("Cloud Boba", ["Cloud", "Cloud", "Tapioca"]);
-recipes.set("Cow Boba", ["Chick", "Milk", "Tapioca"]);
-recipes.set("Deer Boba", ["Mushroom", "Flower", "Tapioca"]);
-recipes.set("Diamond Boba", ["Planet", "Dino", "Tapioca"]);
-recipes.set("Dinosaur Boba", ["Dino", "Dino", "Tapioca"]);
-recipes.set("Dragon Boba", ["Cloud", "Dino", "Tapioca"]);
-recipes.set("Dragon Cream", ["Dino", "Cloud", "Milk"]);
-recipes.set("Dragon Fruit Boba", ["Dino", "Mushroom", "Tapioca"]);
-recipes.set("Fish Boba", ["Cloud", "Mushroom", "Tapioca"]);
-recipes.set("Flower Boba", ["Flower", "Flower", "Tapioca"]);
-recipes.set("Flower Syrup", ["Sugar", "Sugar", "Flower"]);
-recipes.set("Frog Boba", ["Frog", "Tapioca", "Tapioca"]);
-recipes.set("Galaxy Boba", ["Star", "Planet", "Tapioca"]);
-recipes.set("Glitter Syrup", ["Star", "Star", "Cloud"]);
-recipes.set("Gold Flakes & Whipped Cream", ["Milk (Strawberry)", "Star", "Bee"]);
-recipes.set("Gummy Bears", ["Bear", "Bear", "Bear"]);
-recipes.set("Gummy Worms", ["Cloud", "Sugar", "Sugar"]);
-recipes.set("Heart Boba", ["Heart", "Heart", "Tapioca"]);
-recipes.set("Honey", ["Bee", "Bee", "Bee"]);
-recipes.set("Ice Cream Boba", ["Sugar", "Milk", "Tapioca"]);
-recipes.set("Koala Boba", ["Cloud", "Bear", "Tapioca"]);
-recipes.set("Lychee Soda", ["Soda", "Soda", "Soda"]);
-recipes.set("Marshmallows", ["Chick", "Chick", "Sugar"]);
-recipes.set("Moon Boba", ["Heart", "Planet", "Tapioca"]);
-recipes.set("Mushroom Boba", ["Heart", "Mushroom", "Tapioca"]);
-recipes.set("Mushroom Jelly", ["Mushroom", "Mushroom", "Sugar"]);
-recipes.set("Oreo Creme Brulee", ["Sugar", "Milk", "Milk"]);
-recipes.set("Panda Bear Boba", ["Bear", "Bee", "Tapioca"]);
-recipes.set("Pig Boba", ["Pig", "Pig", "Tapioca"]);
-recipes.set("Pineapple", ["Pineapple", "Pineapple", "Pineapple"]);
-recipes.set("Pineapple Boba", ["Pineapple", "Pineapple", "Tapioca"]);
-recipes.set("Pineapple Jelly", ["Pineapple", "Pineapple", "Sugar"]);
-recipes.set("Pink Dinosaur Boba", ["Dino", "Heart", "Tapioca"]);
-recipes.set("Polar Bear Boba", ["Bear", "Soda", "Tapioca"]);
-recipes.set("Polar Bear Syrup", ["Bear", "Soda", "Sugar"]);
-recipes.set("Planet Boba", ["Planet", "Planet", "Tapioca"]);
-recipes.set("Pumpkin Boba", ["Mushroom", "Star", "Tapioca"]);
-recipes.set("Puppy Boba", ["Bear", "Chick", "Tapioca"]);
-recipes.set("Rainbow Heart Boba", ["Heart", "Star", "Tapioca"]);
-recipes.set("Rainbow Syrup", ["Heart", "Star", "Sugar"]);
-recipes.set("Ribbon Bear Boba", ["Heart", "Milk (Strawberry)", "Tapioca"]);
-recipes.set("Rose Petals", ["Flower", "Flower", "Flower"]);
-recipes.set("Rose Petals Syrup", ["Flower", "Sugar", "Bee"]);
-recipes.set("Royal Milk Tea", ["Milk (Strawberry)", "Milk (Strawberry)", "Tapioca"]);
-recipes.set("Sakura Petals", ["Flower", "Flower", "Heart"]);
-recipes.set("Sakura Petals Soda", ["Flower", "Flower", "Bee"]);
-recipes.set("Smiley Face Boba", ["Star", "Milk (Strawberry)", "Tapioca"]);
-recipes.set("Sprinkles", ["Bee", "Heart", "Pineapple"]);
-recipes.set("Sprinkles & Whipped Cream", ["Milk (Strawberry)", "Sugar", "Sugar"]);
-recipes.set("Star Boba", ["Star", "Star", "Tapioca"]);
-recipes.set("Strawberry Cow Boba", ["Soda", "Bee", "Tapioca"]);
-recipes.set("Strawberry Foam", ["Milk (Strawberry)", "Sugar", "Flower"]);
-recipes.set("Strawberry Milk", ["Milk (Strawberry)", "Milk (Strawberry)", "Milk (Strawberry)"]);
-recipes.set("Strawberries & Whipped Cream", ["Milk (Strawberry)", "Flower", "Sugar"]);
-recipes.set("Sunflower Boba", ["Star", "Flower", "Tapioca"]);
-recipes.set("Unicorn Boba", ["Soda", "Tapioca", "Soda"]);
-recipes.set("White Bunny Boba", ["Cloud", "Sugar", "Soda"]);
-recipes.set("White Cat Boba", ["Soda", "Tapioca", "Heart"]);
-recipes.set("Whipped Cream", ["Milk", "Milk", "Milk"]);
+
+
+
+
+// recipes.set("Autumn Leaf Boba", ["Cloud", "Flower", "Tapioca"]);
+// recipes.set("Bear Boba", ["Bear", "Bear", "Tapioca"]);
+// recipes.set("Bee Boba", ["Bee", "Bee", "Tapioca"]);
+// recipes.set("Black and White Boba", ["Cloud", "Tapioca", "Milk"]);
+// recipes.set("Black Cat Paw Boba", ["Cloud", "Heart", "Tapioca"]);
+// recipes.set("Boba Cheese Foam", ["Sugar", "Milk (Strawberry)", "Tapioca"]);
+// recipes.set("Bread Boba", ["Milk (Strawberry)", "Milk", "Tapioca"]);
+// recipes.set("Brown Cat Boba", ["Soda", "Milk", "Tapioca"]);
+// recipes.set("Chick Boba", ["Chick", "Chick", "Tapioca"]);
+// recipes.set("Cloud Boba", ["Cloud", "Cloud", "Tapioca"]);
+// recipes.set("Cow Boba", ["Chick", "Milk", "Tapioca"]);
+// recipes.set("Deer Boba", ["Mushroom", "Flower", "Tapioca"]);
+// recipes.set("Diamond Boba", ["Planet", "Dino", "Tapioca"]);
+// recipes.set("Dinosaur Boba", ["Dino", "Dino", "Tapioca"]);
+// recipes.set("Dragon Boba", ["Cloud", "Dino", "Tapioca"]);
+// recipes.set("Dragon Cream", ["Dino", "Cloud", "Milk"]);
+// recipes.set("Dragon Fruit Boba", ["Dino", "Mushroom", "Tapioca"]);
+// recipes.set("Fish Boba", ["Cloud", "Mushroom", "Tapioca"]);
+// recipes.set("Flower Boba", ["Flower", "Flower", "Tapioca"]);
+// recipes.set("Flower Syrup", ["Sugar", "Sugar", "Flower"]);
+// recipes.set("Frog Boba", ["Frog", "Tapioca", "Tapioca"]);
+// recipes.set("Galaxy Boba", ["Star", "Planet", "Tapioca"]);
+// recipes.set("Galaxy Syrup", ["Star", "Sugar", "Planet"]);
+// recipes.set("Glitter Syrup", ["Star", "Star", "Cloud"]);
+// recipes.set("Gold Flakes & Whipped Cream", ["Milk (Strawberry)", "Star", "Bee"]);
+// recipes.set("Gummy Bears", ["Bear", "Bear", "Bear"]);
+// recipes.set("Gummy Worms", ["Cloud", "Sugar", "Sugar"]);
+// recipes.set("Heart Boba", ["Heart", "Heart", "Tapioca"]);
+// recipes.set("Honey", ["Bee", "Bee", "Bee"]);
+// recipes.set("Ice Cream Boba", ["Sugar", "Milk", "Tapioca"]);
+// recipes.set("Koala Boba", ["Cloud", "Bear", "Tapioca"]);
+// recipes.set("Lychee Soda", ["Soda", "Soda", "Soda"]);
+// recipes.set("Marshmallows", ["Chick", "Chick", "Sugar"]);
+// recipes.set("Moon Boba", ["Heart", "Planet", "Tapioca"]);
+// recipes.set("Mushroom Boba", ["Heart", "Mushroom", "Tapioca"]);
+// recipes.set("Mushroom Jelly", ["Mushroom", "Mushroom", "Sugar"]);
+// recipes.set("Oreo Creme Brulee", ["Sugar", "Milk", "Milk"]);
+// recipes.set("Panda Bear Boba", ["Bear", "Bee", "Tapioca"]);
+// recipes.set("Pig Boba", ["Pig", "Pig", "Tapioca"]);
+// recipes.set("Pineapple", ["Pineapple", "Pineapple", "Pineapple"]);
+// recipes.set("Pineapple Boba", ["Pineapple", "Pineapple", "Tapioca"]);
+// recipes.set("Pineapple Jelly", ["Pineapple", "Pineapple", "Sugar"]);
+// recipes.set("Pink Dinosaur Boba", ["Dino", "Heart", "Tapioca"]);
+// recipes.set("Polar Bear Boba", ["Bear", "Soda", "Tapioca"]);
+// recipes.set("Polar Bear Syrup", ["Bear", "Soda", "Sugar"]);
+// recipes.set("Planet Boba", ["Planet", "Planet", "Tapioca"]);
+// recipes.set("Pumpkin Boba", ["Mushroom", "Star", "Tapioca"]);
+// recipes.set("Puppy Boba", ["Bear", "Chick", "Tapioca"]);
+// recipes.set("Rainbow Heart Boba", ["Heart", "Star", "Tapioca"]);
+// recipes.set("Rainbow Syrup", ["Heart", "Star", "Sugar"]);
+// recipes.set("Ribbon Bear Boba", ["Heart", "Milk (Strawberry)", "Tapioca"]);
+// recipes.set("Rose Petals", ["Flower", "Flower", "Flower"]);
+// recipes.set("Rose Petals Syrup", ["Flower", "Sugar", "Bee"]);
+// recipes.set("Royal Milk Tea", ["Milk (Strawberry)", "Milk (Strawberry)", "Tapioca"]);
+// recipes.set("Sakura Petals", ["Flower", "Flower", "Heart"]);
+// recipes.set("Sakura Petals Syrup", ["Flower", "Flower", "Sugar"]);
+// recipes.set("Sakura Petals Soda", ["Flower", "Flower", "Bee"]);
+// recipes.set("Smiley Face Boba", ["Star", "Milk (Strawberry)", "Tapioca"]);
+// recipes.set("Sprinkles", ["Bee", "Heart", "Pineapple"]);
+// recipes.set("Sprinkles & Whipped Cream", ["Milk (Strawberry)", "Sugar", "Sugar"]);
+// recipes.set("Star Boba", ["Star", "Star", "Tapioca"]);
+// recipes.set("Strawberry Cow Boba", ["Soda", "Bee", "Tapioca"]);
+// recipes.set("Strawberry Foam", ["Milk (Strawberry)", "Sugar", "Flower"]);
+// recipes.set("Strawberry Milk", ["Milk (Strawberry)", "Milk (Strawberry)", "Milk (Strawberry)"]);
+// recipes.set("Strawberries & Whipped Cream", ["Milk (Strawberry)", "Flower", "Sugar"]);
+// recipes.set("Sunflower Boba", ["Star", "Flower", "Tapioca"]);
+// recipes.set("Unicorn Boba", ["Soda", "Tapioca", "Soda"]);
+// recipes.set("White Bunny Boba", ["Cloud", "Sugar", "Soda"]);
+// recipes.set("White Cat Boba", ["Soda", "Tapioca", "Heart"]);
+// recipes.set("Whipped Cream", ["Milk", "Milk", "Milk"]);
 
 
 interface TabPanelProps {
@@ -147,11 +163,47 @@ function Recipe(props: RecipeProps) {
   )
 }
 
+
 export default function Home() {
   const [availableIngredients, setIngredients] = useState<Map<string, number>>(new Map());
   const [tab, setTab] = useState(0);
   const [letter, setLetter] = useState('?');
   const [query, setQuery] = useState("");
+
+  const cleanTitle = (str: string) => str.replace(/\s*\[\d+\]$/, '').trim();
+
+  useEffect(() => {
+    fetch('/api/recipes')
+      .then(response => response.json())
+      .then(data => {
+        const text = data.html;
+        console.log(text);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const tables = doc.querySelectorAll('table.sortable.fandom-table');
+        if (tables.length != 0) {
+          tables.forEach((table) => {
+            const rows = table.querySelectorAll('tr');
+            rows.forEach((row, index) => {
+              if (index > 0) {
+                console.log(row.innerText);
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 4) {
+                  const recipeName = cleanTitle(cells[0].innerText.trim());
+                  const ingredient1 = nameChanges.has(cells[1].innerText.trim()) ? nameChanges.get(cells[1].innerText.trim()) : cells[1].innerText.trim();
+                  const ingredient2 = nameChanges.has(cells[2].innerText.trim()) ? nameChanges.get(cells[2].innerText.trim()) : cells[2].innerText.trim();
+                  const ingredient3 = nameChanges.has(cells[3].innerText.trim()) ? nameChanges.get(cells[3].innerText.trim()) : cells[3].innerText.trim();
+                  recipes.set(recipeName, [ingredient1, ingredient2, ingredient3]);
+                }
+              }
+            });
+          })
+        }
+      });
+
+  }, []);
+
+
   const ingredientsTab = () => {
     setTab(0);
   }
@@ -241,25 +293,31 @@ export default function Home() {
   }
 
   const displayRecipesByName = () => {
-    const availableRecipes = Array.from(recipes).map(([recipeName, ingredients]) => {
-      if (recipeName.charAt(0) == letter.charAt(0)) {
-        return recipeName;
-      }
-      return null;
-    });
-  
-    return availableRecipes.filter((recipe) => recipe !== null);
+    const availableRecipes = Array.from(recipes)
+      .map(([recipeName, ingredients]) => {
+        if (recipeName.charAt(0) == letter.charAt(0)) {
+          return recipeName;
+        }
+        return null;
+      })
+      .filter((recipe) => recipe !== null)
+      .sort((a, b) => a.localeCompare(b)); // <-- Sort alphabetically
+
+    return availableRecipes;
   }
 
   const displayRecipesBySearch = () => {
-    const availableRecipes = Array.from(recipes).map(([recipeName, ingredients]) => {
-      if (recipeName.toLowerCase().includes(query.toLowerCase())) {
-        return recipeName;
-      }
-      return null;
-    });
-  
-    return availableRecipes.filter((recipe) => recipe !== null);
+    const availableRecipes = Array.from(recipes)
+      .map(([recipeName, ingredients]) => {
+        if (recipeName.toLowerCase().includes(query.toLowerCase())) {
+          return recipeName;
+        }
+        return null;
+      })
+      .filter((recipe) => recipe !== null)
+      .sort((a, b) => a.localeCompare(b)); // <-- Sort alphabetically
+
+    return availableRecipes;
   }
   
   
@@ -345,6 +403,7 @@ export default function Home() {
             <div className="p-1">
               {displayRecipes().map((recipe, index) => (
                 <Recipe
+                key={recipe}
                 name={recipe}
                 index={index}
                 ingredient1={recipes.get(recipe)[0]}
@@ -357,15 +416,15 @@ export default function Home() {
         {tab==1 && 
           <div>
             <Tabs
-            value={tab}
-            onChange={handleAlphabetTabs}
-            textColor="secondary"
-            indicatorColor="secondary"
-            aria-label="secondary tabs example"
+              value={letter}
+              onChange={handleAlphabetTabs}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="alphabet tabs"
             >
               <Tab value='?' label="Search" style={{minWidth: 50}}/>
               {Array.from(alphabet).map((letter) => (
-                <Tab value={letter} label={letter} style={{ minWidth: 50 }}/>
+                <Tab key={letter} value={letter} label={letter} style={{ minWidth: 50 }}/>
               ))}
             </Tabs>
             {letter=="?" &&
@@ -378,6 +437,7 @@ export default function Home() {
                 }}/>
                 {displayRecipesBySearch().map((recipe, index) => (
                   <Recipe
+                  key={recipe}
                   name={recipe}
                   index={index}
                   ingredient1={recipes.get(recipe)[0]}
